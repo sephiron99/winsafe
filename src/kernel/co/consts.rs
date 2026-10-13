@@ -1620,6 +1620,15 @@ const_bitflag! { THREAD_CREATE: u32;
 	STACK_SIZE_PARAM_IS_A_RESERVATION 0x0001_0000
 }
 
+const_ordinary! { TIME_ZONE_ID: u32;
+	/// [`GetTimeZoneInformation`](crate::GetTimeZoneInformation) return value
+	/// (`u32`).
+	=>
+	UNKNOWN 0
+	STANDARD 1
+	DAYLIGHT 2
+}
+
 const_bitflag! { TOKEN: u32;
 	/// [Token access rights](https://learn.microsoft.com/en-us/windows/win32/secauthz/access-rights-for-access-token-objects).
 	=>

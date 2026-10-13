@@ -969,6 +969,22 @@ pub fn GetTickCount64() -> u64 {
 	unsafe { ffi::GetTickCount64() }
 }
 
+/// [`GetTimeZoneInformation`](https://learn.microsoft.com/en-us/windows/win32/api/timezoneapi/nf-timezoneapi-gettimezoneinformation)
+/// function.
+///
+/// # Related functions
+///
+/// * [`SystemTimeToTzSpecificLocalTime`](crate::SystemTimeToTzSpecificLocalTime)
+#[must_use]
+pub fn GetTimeZoneInformation() -> SysResult<(co::TIME_ZONE_ID, TIME_ZONE_INFORMATION)> {
+	const INVALID: u32 = 0xffff_ffff;
+	let mut tzi = TIME_ZONE_INFORMATION::default();
+	match unsafe { ffi::GetTimeZoneInformation(pvoid(&mut tzi)) } {
+		INVALID => Err(GetLastError()),
+		id => Ok((unsafe { co::TIME_ZONE_ID::from_raw(id) }, tzi)),
+	}
+}
+
 /// [`GetVolumeInformation`](https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-getvolumeinformationw)
 /// function.
 ///
@@ -1649,6 +1665,7 @@ pub fn SystemTimeToFileTime(st: &SYSTEMTIME) -> SysResult<FILETIME> {
 /// * [`GetLocalTime`](crate::GetLocalTime)
 /// * [`GetSystemTime`](crate::GetSystemTime)
 /// * [`GetSystemTimeAsFileTime`](crate::GetSystemTimeAsFileTime)
+/// * [`GetTimeZoneInformation`](crate::GetTimeZoneInformation)
 /// * [`SystemTimeToFileTime`](crate::SystemTimeToFileTime)
 #[must_use]
 pub fn SystemTimeToTzSpecificLocalTime(

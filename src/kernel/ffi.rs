@@ -105,6 +105,7 @@ extern_sys! { "kernel32";
 	GetThreadPriorityBoost(HANDLE, *mut BOOL) -> BOOL
 	GetThreadTimes(HANDLE, PVOID, PVOID, PVOID, PVOID) -> BOOL
 	GetTickCount64() -> u64
+	GetTimeZoneInformation(PVOID) -> u32
 	GetVolumeInformationW(PCSTR, PSTR, u32, *mut u32, *mut u32, *mut u32, PSTR, u32) -> BOOL
 	GetVolumePathNameW(PCSTR, PSTR, u32) -> BOOL
 	GlobalAlloc(u32, usize) -> HANDLE
